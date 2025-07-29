@@ -15,13 +15,15 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background-color: #fafafa;
             color: #333;
+            /* color: aqua; */
             line-height: 1.6;
         }
 
         .header {
             background: linear-gradient(135deg, #1e1e1e 0%, #2c2c2c 100%);
+            /* background: linear-gradient(135deg, #c92727 0%, #2c2c2c 100%); */
             color: white;
-            padding: 3rem 0;
+            padding: 0rem 0;
             text-align: center;
         }
 
@@ -46,7 +48,7 @@
 
         .header-tab {
             padding: 1rem 2rem;
-            background: rgba(255,255,255,0.1);
+            background:#1890ff;
             border: 1px solid rgba(255,255,255,0.2);
             border-radius: 8px;
             color: white;
@@ -67,6 +69,27 @@
             margin: 0 auto;
             padding: 0 1rem;
         }
+
+        .container1 {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+    background-image: url('photos/container.jpg');  /* 图片路径 */
+     background-size: cover;   
+     /* 使背景图片覆盖整个容器 */
+
+    /* background-position: center center;  背景图片居中 */
+    /* background-repeat: no-repeat;  防止图片重复 */
+    /* color: white;  /* 设置文字颜色，使其与背景图片对比明显 */
+    /* padding: 50px;  可根据需求调整内边距 */ 
+ 
+    background-size: 100% 100%;  /* 拉伸图片以完全填充容器，可能导致图片变形 */
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 100%;
+
+}
+
 
         .tab-content {
             display: none;
@@ -479,8 +502,8 @@
 </head>
 <body>
     <div class="header">
-        <div class="container">
-            <h1>加入我们</h1>
+        <div class="container1">
+            <h1>加入舞肌科技</h1>
             <p>与优秀的人一起，做有意义的事</p>
             <div class="header-tabs">
                 <a href="#" class="header-tab active" data-tab="campus">校园招聘</a>
