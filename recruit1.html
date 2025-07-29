@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>招聘中心 - 科技创新公司</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #fafafa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e1e1e 0%, #2c2c2c 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 300;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .header-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .header-tab {
+            padding: 1rem 2rem;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .header-tab:hover, .header-tab.active {
+            background: rgba(24,144,255,0.8);
+            border-color: #1890ff;
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .stats {
+            background: white;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .stats h3 {
+            margin-bottom: 1.5rem;
+            color: #333;
+            font-size: 1.5rem;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1890ff;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .filters {
+            background: white;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .filter-clear {
+            color: #1890ff;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .filter-clear:hover {
+            text-decoration: underline;
+        }
+
+        .filter-section {
+            margin-bottom: 2rem;
+        }
+
+        .filter-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .filter-section-title {
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.2rem;
+            border: 1px solid #d9d9d9;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .filter-btn:hover {
+            border-color: #1890ff;
+            color: #1890ff;
+        }
+
+        .filter-btn.active {
+            background: #1890ff;
+            color: white;
+            border-color: #1890ff;
+        }
+
+        .position-count {
+            background: white;
+            padding: 1rem 2rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .job-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .job-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid transparent;
+            position: relative;
+        }
+
+        .job-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+            border-color: #1890ff;
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .job-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .job-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .job-action {
+            width: 32px;
+            height: 32px;
+            border: 1px solid #d9d9d9;
+            background: white;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .job-action:hover {
+            border-color: #1890ff;
+            color: #1890ff;
+        }
+
+        .job-meta {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .job-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .job-meta span:not(:last-child)::after {
+            content: '|';
+            margin-left: 0.5rem;
+            color: #d9d9d9;
+        }
+
+        .job-description {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .job-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .job-tag {
+            background: #f0f0f0;
+            padding: 0.4rem 0.8rem;
+            border-radius: 16px;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .job-apply {
+            background: #1890ff;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .job-apply:hover {
+            background: #0c7cd5;
+            transform: translateY(-1px);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #666;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .apply-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-label {
+            margin-bottom: 0.8rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-input {
+            padding: 1rem;
+            border: 1px solid #d9d9d9;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #1890ff;
+            box-shadow: 0 0 0 2px rgba(24,144,255,0.2);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 2rem 0;
+        }
+
+        .pagination-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid #d9d9d9;
+            background: white;
+            color: #666;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            border-color: #1890ff;
+            color: #1890ff;
+        }
+
+        .pagination-btn.active {
+            background: #1890ff;
+            color: white;
+            border-color: #1890ff;
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header-tabs {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: center;
+            }
+            
+            .job-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-section-title {
+                margin-bottom: 0.8rem;
+            }
+            
+            .stat-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .modal-content {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>加入我们</h1>
+            <p>与优秀的人一起，做有意义的事</p>
+            <div class="header-tabs">
+                <a href="#" class="header-tab active" data-tab="campus">校园招聘</a>
+                <a href="#" class="header-tab" data-tab="social">社会招聘</a>
+                <a href="#" class="header-tab" data-tab="intern">实习生招聘</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- 校园招聘 -->
+        <div class="tab-content active" id="campus">
+            <div class="stats">
+                <h3>2025校园招聘火热进行中</h3>
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">35</div>
+                        <div class="stat-label">校招职位</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">招聘城市</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">招聘名额</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">15K-25K</div>
+                        <div class="stat-label">起薪范围</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filters">
+                <div class="filter-header">
+                    <span class="filter-title">筛选</span>
+                    <span class="filter-clear" onclick="clearFilters('campus')">清除筛选</span>
+                </div>
+                
+                <div class="filter-section">
+                    <div class="filter-section-title">职位类别</div>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-category="all">全部</button>
+                        <button class="filter-btn" data-category="tech">技术类</button>
+                        <button class="filter-btn" data-category="product">产品及解决方案类</button>
+                        <button class="filter-btn" data-category="design">设计创意类</button>
+                        <button class="filter-btn" data-category="marketing">市场销售类</button>
+                        <button class="filter-btn" data-category="supply">供应链类</button>
+                        <button class="filter-btn" data-category="support">产品支持及服务类</button>
+                        <button class="filter-btn" data-category="function">职能类</button>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <div class="filter-section-title">工作城市</div>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-city="all">全部</button>
+                        <button class="filter-btn" data-city="深圳">深圳</button>
+                        <button class="filter-btn" data-city="北京">北京</button>
+                        <button class="filter-btn" data-city="上海">上海</button>
+                        <button class="filter-btn" data-city="杭州">杭州</button>
+                        <button class="filter-btn" data-city="广州">广州</button>
+                        <button class="filter-btn" data-city="成都">成都</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="position-count" id="campus-count">找到 0 个职位</div>
+            <div class="job-grid" id="campus-jobs"></div>
+        </div>
+
+        <!-- 社会招聘 -->
+        <div class="tab-content" id="social">
+            <div class="stats">
+                <h3>社会招聘 - 寻找经验丰富的你</h3>
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">68</div>
+                        <div class="stat-label">社招职位</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">15</div>
+                        <div class="stat-label">招聘城市</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">1000+</div>
+                        <div class="stat-label">招聘名额</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">20K-50K</div>
+                        <div class="stat-label">薪资范围</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filters">
+                <div class="filter-header">
+                    <span class="filter-title">筛选</span>
+                    <span class="filter-clear" onclick="clearFilters('social')">清除筛选</span>
+                </div>
+                
+                <div class="filter-section">
+                    <div class="filter-section-title">职位类别</div>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-category="all">全部</button>
+                        <button class="filter-btn" data-category="tech">技术类</button>
+                        <button class="filter-btn" data-category="product">产品及解决方案类</button>
+                        <button class="filter-btn" data-category="design">设计创意类</button>
+                        <button class="filter-btn" data-category="marketing">市场销售类</button>
+                        <button class="filter-btn" data-category="supply">供应链类</button>
+                        <button class="filter-btn" data-category="support">产品支持及服务类</button>
+                        <button class="filter-btn" data-category="function">职能类</button>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <div class="filter-section-title">工作城市</div>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-city="all">全部</button>
+                        <button class="filter-btn" data-city="深圳">深圳</button>
+                        <button class="filter-btn" data-city="北京">北京</button>
+                        <button class="filter-btn" data-city="上海">上海</button>
+                        <button class="filter-btn" data-city="杭州">杭州</button>
+                        <button class="filter-btn" data-city="广州">广州</button>
+                        <button class="filter-btn" data-city="成都">成都</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="position-count" id="social-count">找到 0 个职位</div>
+            <div class="job-grid" id="social-jobs"></div>
+        </div>
+
+        <!-- 实习生招聘 -->
+        <div class="tab-content" id="intern">
+            <div class="stats">
+                <h3>实习生招聘 - 优秀应届生的成长平台</h3>
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">25</div>
+                        <div class="stat-label">实习职位</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">招聘城市</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">200+</div>
+                        <div class="stat-label">实习名额</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">150-300</div>
+                        <div class="stat-label">日薪范围</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filters">
+                <div class="filter-header">
+                    <span class="filter-title">筛选</span>
+                    <span class="filter-clear" onclick="clearFilters('intern')">清除筛选</span>
+                </div>
+                
+                <div class="filter-section">
+                    <div class="filter-section-title">职位类别</div>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-category="all">全部</button>
+                        <button class="filter-btn" data-category="tech">技术类</button>
+                        <button class="filter-btn" data-category="product">产品及解决方案类</button>
+                        <button class="filter-btn" data-category="design">设计创意类</button>
+                        <button class="filter-btn" data-category="marketing">市场销售类</button>
+                        <button class="filter-btn" data-category="support">产品支持及服务类</button>
+                        <button class="filter-btn" data-category="function">职能类</button>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <div class="filter-section-title">工作城市</div>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-city="all">全部</button>
+                        <button class="filter-btn" data-city="深圳">深圳</button>
+                        <button class="filter-btn" data-city="北京">北京</button>
+                        <button class="filter-btn" data-city="上海">上海</button>
+                        <button class="filter-btn" data-city="杭州">杭州</button>
+                        <button class="filter-btn" data-city="成都">成都</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="position-count" id="intern-count">找到 0 个职位</div>
+            <div class="job-grid" id="intern-jobs"></div>
+        </div>
+    </div>
+
+    <div class="modal" id="applyModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">申请职位</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <form class="apply-form" id="applyForm">
+                <div class="form-group">
+                    <label class="form-label">姓名 *</label>
+                    <input type="text" class="form-input" required placeholder="请输入您的姓名">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">邮箱 *</label>
+                    <input type="email" class="form-input" required placeholder="请输入您的邮箱">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">手机号 *</label>
+                    <input type="tel" class="form-input" required placeholder="请输入您的手机号">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">学历</label>
+                    <select class="form-input">
+                        <option value="">请选择学历</option>
+                        <option value="专科">专科</option>
+                        <option value="本科">本科</option>
+                        <option value="硕士">硕士</option>
+                        <option value="博士">博士</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">工作经验</label>
+                    <select class="form-input">
+                        <option value="">请选择工作经验</option>
+                        <option value="应届毕业生">应届毕业生</option>
+                        <option value="1年以下">1年以下</option>
+                        <option value="1-3年">1-3年</option>
+                        <option value="3-5年">3-5年</option>
+                        <option value="5-10年">5-10年</option>
+                        <option value="10年以上">10年以上</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">自我介绍</label>
+                    <textarea class="form-input form-textarea" placeholder="请简单介绍一下您的工作经验、技能特长和职业规划..."></textarea>
+                </div>
+                <button type="submit" class="job-apply">提交申请</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // 职位数据
+        const jobsData = {
+            campus: [
+                {
+                    id: 1,
+                    title: "校招-软件工程师",
+                    category: "tech",
+                    city: "深圳",
+                    team: "研发团队",
+                    date: "2025-07-29",
+                    tags: ["Java", "Spring", "微服务"],
+                    description: "负责后端系统开发，参与核心业务系统架构设计。要求计算机相关专业，熟悉Java编程，有良好的编程基础和学习能力。"
+                },
+                {
+                    id: 2,
+                    title: "校招-产品经理",
+                    category: "product",
+                    city: "北京",
+                    team: "产品团队",
+                    date: "2025-07-28",
+                    tags: ["产品设计", "用户体验", "需求分析"],
+                    description: "负责产品规划和需求分析，与技术团队协作推进产品迭代。要求有良好的逻辑思维和沟通能力，对用户体验有敏锐洞察。"
+                },
+                {
+                    id: 3,
+                    title: "校招-UI设计师",
+                    category: "design",
+                    city: "上海",
+                    team: "设计团队",
+                    date: "2025-07-27",
+                    tags: ["UI设计", "Figma", "用户体验"],
+                    description: "负责产品界面设计和视觉规范制定。要求设计相关专业，熟练掌握设计工具，有良好的审美能力和创意思维。"
+                },
+                {
+                    id: 4,
+                    title: "校招-市场营销专员",
+                    category: "marketing",
+                    city: "广州",
+                    team: "市场团队",
+                    date: "2025-07-26",
+                    tags: ["市场推广", "内容营销", "数据分析"],
+                    description: "负责品牌推广和营销活动策划执行。要求市场营销相关专业，有创意思维和良好的文案能力，熟悉数字化营销。"
+                },
+                {
+                    id: 5,
+                    title: "校招-供应链管理",
+                    category: "supply",
+                    city: "深圳",
+                    team: "供应链团队",
+                    date: "2025-07-25",
+                    tags: ["供应链", "采购管理", "数据分析"],
+                    description: "负责供应商管理和采购流程优化。要求供应链管理或相关专业，有良好的分析能力和沟通协调能力。"
+                },
+                {
+                    id: 6,
+                    title: "校招-客户成功专员",
+                    category: "support",
+                    city: "杭州",
+                    team: "客户成功团队",
+                    date: "2025-07-24",
+                    tags: ["客户服务", "项目管理", "沟通协调"],
+                    description: "负责客户关系维护和成功案例跟进。要求有良好的服务意识和沟通能力，能够快速学习业务知识。"
+                }
+            ],
+            social: [
+                {
+                    id: 7,
+                    title: "高级软件工程师",
+                    category: "tech",
+                    city: "深圳",
+                    team: "研发团队",
+                    date: "2025-07-29",
+                    tags: ["Java", "分布式", "高并发"],
+                    description: "负责核心系统架构设计和开发。要求3年以上Java开发经验，熟悉分布式系统设计，有高并发系统开发经验。"
+                },
+                {
+                    id: 8,
+                    title: "资深产品经理",
+                    category: "product",
+                    city: "北京",
+                    team: "产品团队",
+                    date: "2025-07-28",
+                    tags: ["产品战略", "B端产品", "团队管理"],
+                    description: "负责产品线规划和团队管理。要求5年以上产品经验，有B端产品经验，具备优秀的战略思维和团队管理能力。"
+                },
+                {
+                    id: 9,
+                    title: "高级UI/UX设计师",
+                    category: "design",
+                    city: "上海",
+                    team: "设计团队",
+                    date: "2025-07-27",
+                    tags: ["交互设计", "视觉设计", "设计体系"],
+                    description: "负责产品设计和设计体系建设。要求3年以上设计经验，有完整产品设计经验，熟悉设计规范和流程。"
+                },
+                {
+                    id: 10,
+                    title: "营销总监",
+                    category: "marketing",
+                    city: "广州",
+                    team: "市场团队",
+                    date: "2025-07-26",
+                    tags: ["品牌营销", "团队管理", "战略规划"],
+                    description: "负责市场营销战略制定和执行。要求5年以上营销经验，有品牌营销和团队管理经验，具备战略思维。"
+                },
+                {
+                    id: 11,
+                    title: "供应链总监",
+                    category: "supply",
+                    city: "深圳",
+                    team: "供应链团队",
+                    date: "2025-07-25",
+                    tags: ["供应链战略", "成本控制", "团队管理"],
+                    description: "负责供应链战略规划和团队管理。要求8年以上供应链经验，有成本控制和供应商管理经验。"
+                },
+                {
+                    id: 12,
+                    title: "技术支持经理",
+                    category: "support",
+                    city: "杭州",
+                    team: "技术支持团队",
+                    date: "2025-07-24",
+                    tags: ["技术支持", "客户服务", "团队管理"],
+                    description: "负责技术支持团队管理和客户问题解决。要求3年以上技术支持经验，有团队管理和客户服务经验。"
+                },
+                {
+                    id: 13,
+                    title: "财务经理",
+                    category: "function",
+                    city: "成都",
+                    team: "财务团队",
+                    date: "2025-07-23",
+                    tags: ["财务管理", "成本分析", "预算规划"],
+                    description: "负责财务管理和成本控制。要求财务相关专业，5年以上财务工作经验，有成本分析和预算管理经验。"
+                }
+            ],
+            intern: [
+                {
+                    id: 14,
+                    title: "实习生（工业设计）",
+                    category: "design",
+                    city: "深圳",
+                    team: "研发团队",
+                    date: "2025-07-11",
+                    tags: ["工业设计", "产品设计", "3D建模"],
+                    description: "深度参与产品研发，将自己的概念落实到实际项目上，开发出超乎想象的高质量产品。同市场，R&D teams等团队紧密合作，验证设计想法，并落实到产品上。"
+                },
+                {
+                    id: 15,
+                    title: "实习生（客户端开发）",
+                    category: "tech",
+                    city: "深圳",
+                    team: "研发团队",
+                    date: "2025-07-02",
+                    tags: ["Unity", "客户端开发", "Windows开发"],
+                    description: "使用Unity参与客户端软件开发；业务所需的Windows软件开发及优化；客户端相关工具开发与维护。"
+                },
+                {
+                    id: 16,
+                    title: "实习生（NN优化）",
+                    category: "tech",
+                    city: "深圳",
+                    team: "研发团队",
+                    date: "2025-06-24",
+                    tags: ["机器学习", "神经网络", "算法优化"],
+                    description: "负责机器学习相关技术的研发，包括高效前沿NN模型结构和计算方式探索，跟踪业界技术发展动向；负责算法开发及业务普适性应用。"
+                },
+                {
+                    id: 17,
+                    title: "实习生（图像算法）",
+                    category: "tech",
+                    city: "上海",
+                    team: "研发团队",
+                    date: "2025-03-25",
+                    tags: ["图像处理", "深度学习", "算法开发"],
+                    description: "参与深度学习用于图像处理和画质增强方案的评估和算法开发，及其性能仿真和优化；参与训练、微调和数据处理的工具建设。"
+                },
+                {
+                    id: 18,
+                    title: "实习生（电磁力学）",
+                    category: "tech",
+                    city: "深圳",
+                    team: "研发团队",
+                    date: "2025-01-22",
+                    tags: ["电磁设计", "仿真分析", "电机设计"],
+                    description: "负责各类电机的电磁设计工作，包括需求对接、方案评估、详细设计、性能仿真与优化、性能实测和分析、电磁相关问题解决等。"
+                },
+                {
+                    id: 19,
+                    title: "实习生（AI模型算法）",
+                    category: "tech",
+                    city: "深圳",
+                    team: "研发团队",
+                    date: "2025-01-08",
+                    tags: ["AI算法", "大模型", "无人机技术"],
+                    description: "参与部门NN相关业务预研，探索构建新一代智能无人机系统。探索NN技术在无人机多视角多模态传感器融合可行性；探索大模型能力在无人机智能提升的可行性。"
+                },
+                {
+                    id: 20,
+                    title: "实习生（产品运营）",
+                    category: "product",
+                    city: "北京",
+                    team: "产品团队",
+                    date: "2025-07-20",
+                    tags: ["产品运营", "数据分析", "用户研究"],
+                    description: "协助产品运营工作，参与用户调研和数据分析，协助产品功能优化和运营活动策划。要求有良好的逻辑思维和数据敏感度。"
+                },
+                {
+                    id: 21,
+                    title: "实习生（市场推广）",
+                    category: "marketing",
+                    city: "上海",
+                    team: "市场团队",
+                    date: "2025-07-18",
+                    tags: ["市场推广", "内容创作", "社交媒体"],
+                    description: "协助市场推广活动策划和执行，参与内容创作和社交媒体运营。要求有创意思维，熟悉新媒体平台，有良好的文案能力。"
+                }
+            ]
+        };
+
+        let currentTab = 'campus';
+        let currentFilters = {
+            campus: { category: 'all', city: 'all' },
+            social: { category: 'all', city: 'all' },
+            intern: { category: 'all', city: 'all' }
+        };
+
+        // 标签页切换
+        function switchTab(tabName) {
+            currentTab = tabName;
+            
+            // 更新标签页状态
+            document.querySelectorAll('.header-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+
+            // 更新内容区域
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabName).classList.add('active');
+
+            // 渲染职位
+            renderJobs(tabName);
+        }
+
+        // 渲染职位列表
+        function renderJobs(tabName) {
+            const jobs = jobsData[tabName];
+            const filters = currentFilters[tabName];
+            
+            // 过滤职位
+            let filteredJobs = jobs.filter(job => {
+                const categoryMatch = filters.category === 'all' || job.category === filters.category;
+                const cityMatch = filters.city === 'all' || job.city === filters.city;
+                return categoryMatch && cityMatch;
+            });
+
+            // 更新职位数量
+            document.getElementById(`${tabName}-count`).textContent = `找到 ${filteredJobs.length} 个职位`;
+
+            // 渲染职位卡片
+            const jobGrid = document.getElementById(`${tabName}-jobs`);
+            jobGrid.innerHTML = '';
+
+            filteredJobs.forEach(job => {
+                const jobCard = document.createElement('div');
+                jobCard.className = 'job-card';
+                jobCard.innerHTML = `
+                    <div class="job-header">
+                        <div>
+                            <div class="job-title">${job.title}</div>
+                        </div>
+                        <div class="job-actions">
+                            <div class="job-action" title="收藏">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M11.9993 2.5L8.9428 8.7388L2 9.74555L7.02945 14.6625L5.8272 21.5L11.9993 18.2096L18.1727 21.5L16.9793 14.6625L22 9.74555L15.0956 8.7388L11.9993 2.5Z"></path>
+                                </svg>
+                            </div>
+                            <div class="job-action" title="分享">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <circle cx="18" cy="5" r="3"></circle>
+                                    <circle cx="6" cy="12" r="3"></circle>
+                                    <circle cx="18" cy="19" r="3"></circle>
+                                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="job-meta">
+                        <span>📍 ${job.city}</span>
+                        <span>${getCategoryName(job.category)}</span>
+                        <span>${job.team}</span>
+                        <span>${job.date}</span>
+                    </div>
+                    <div class="job-tags">
+                        ${job.tags.map(tag => `<span class="job-tag">${tag}</span>`).join('')}
+                    </div>
+                    <div class="job-description">${job.description}</div>
+                    <button class="job-apply" onclick="openApplyModal('${job.title}')">立即申请</button>
+                `;
+                jobGrid.appendChild(jobCard);
+            });
+        }
+
+        // 获取类别名称
+        function getCategoryName(category) {
+            const categoryMap = {
+                'tech': '技术类',
+                'product': '产品及解决方案类',
+                'design': '设计创意类',
+                'marketing': '市场销售类',
+                'supply': '供应链类',
+                'support': '产品支持及服务类',
+                'function': '职能类'
+            };
+            return categoryMap[category] || category;
+        }
+
+        // 筛选职位
+        function filterJobs(tabName, filterType, filterValue) {
+            currentFilters[tabName][filterType] = filterValue;
+            
+            // 更新筛选按钮状态
+            const filterSection = document.querySelector(`#${tabName} [data-${filterType}="${filterValue}"]`).closest('.filter-section');
+            filterSection.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            filterSection.querySelector(`[data-${filterType}="${filterValue}"]`).classList.add('active');
+
+            // 重新渲染职位
+            renderJobs(tabName);
+        }
+
+        // 清除筛选
+        function clearFilters(tabName) {
+            currentFilters[tabName] = { category: 'all', city: 'all' };
+            
+            // 重置筛选按钮
+            document.querySelectorAll(`#${tabName} .filter-btn`).forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelectorAll(`#${tabName} .filter-btn[data-category="all"], #${tabName} .filter-btn[data-city="all"]`).forEach(btn => {
+                btn.classList.add('active');
+            });
+
+            // 重新渲染职位
+            renderJobs(tabName);
+        }
+
+        // 打开申请模态框
+        function openApplyModal(jobTitle) {
+            document.getElementById('modalTitle').textContent = `申请：${jobTitle}`;
+            document.getElementById('applyModal').style.display = 'flex';
+        }
+
+        // 关闭模态框
+        function closeModal() {
+            document.getElementById('applyModal').style.display = 'none';
+        }
+
+        // 事件监听器
+        document.addEventListener('DOMContentLoaded', function() {
+            // 标签页切换
+            document.querySelectorAll('.header-tab').forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    switchTab(tab.dataset.tab);
+                });
+            });
+
+            // 筛选按钮
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const tabName = btn.closest('.tab-content').id;
+                    const filterType = btn.dataset.category ? 'category' : 'city';
+                    const filterValue = btn.dataset.category || btn.dataset.city;
+                    filterJobs(tabName, filterType, filterValue);
+                });
+            });
+
+            // 申请表单提交
+            document.getElementById('applyForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('申请已提交！我们会尽快与您联系。');
+                closeModal();
+                e.target.reset();
+            });
+
+            // 点击模态框外部关闭
+            document.getElementById('applyModal').addEventListener('click', (e) => {
+                if (e.target.id === 'applyModal') {
+                    closeModal();
+                }
+            });
+
+            // 初始化
+            renderJobs('campus');
+        });
+    </script>
+</body>
+</html>
